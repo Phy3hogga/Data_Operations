@@ -1,5 +1,5 @@
 function Bit_Vector = Bit_String_To_Vector(Bit_String)
-#This function converts a bit string to a vector of 0s and 1s.
+%This function converts a bit string to a vector of 0s and 1s.
 %
 %Input: bitstr - string of "0"s and "1"s in IEEE 754 floating point format
 %Output: bitvec - vector of 0s and 1s
