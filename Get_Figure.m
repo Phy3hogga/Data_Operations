@@ -10,7 +10,11 @@ function Figure_ID = Get_Figure(Figure_ID, Hide_Figure)
     %Only figure ID parsed
     elseif(nargin == 1)
         %% Check if figure exists
-        if(~ishandle(Figure_ID))
+        if(isempty(Figure_ID))
+            %% Figure doesn't exist
+            %create figure
+            Figure_ID = figure();
+        elseif(~ishandle(Figure_ID))
             %% Figure doesn't exist
             %create figure
             Figure_ID = figure();
@@ -21,7 +25,15 @@ function Figure_ID = Get_Figure(Figure_ID, Hide_Figure)
         end
     else
         %% Check if figure exists
-        if(~ishandle(Figure_ID))
+        if(isempty(Figure_ID))
+            %% Figure doesn't exist
+            %create figure
+            Figure_ID = figure();
+            %if hiding graphs from user
+            if(Hide_Figure)
+                set(Figure_ID,'visible','off');
+            end
+        elseif(~ishandle(Figure_ID))
             %% Figure doesn't exist
             %create figure
             Figure_ID = figure();
