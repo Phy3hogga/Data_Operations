@@ -7,6 +7,31 @@ function [Group_Start, Group_End] = Find_Logical_Groups(Input_Array)
     if(~islogical(Input_Array))
         error("Find Logical Groups : Expected logical array as input");
     end
+    %% Validate array is the correct orientation
+    Array_Size = size(Input_Array);
+    if(numel(Array_Size) > 2)
+        error("Expected one dimensional array.");
+    end
+    
+    %% If the array requires flipping or not
+    Flip_Array = false;
+    if(Array_Size(1) == 1)
+        if(Array_Size(2) == 1)
+            error("Expected one dimensional array wtih more than one element.");
+        else
+            Flip_Array = true;
+        end
+    else
+        if(Array_Size(2) == 1)
+            %No flip required
+        else
+            error("Expected one dimensional array.");
+        end
+    end
+    %% Flip array to be linear list
+    if(Flip_Array)
+        Input_Array = Input_Array';
+    end
     %% Array Padding
     %Shift array one place to the right, pad with 0 at the beginning (always catch start condition)
     Input_Array = Shift_Array(Input_Array, 1, 0);
@@ -17,6 +42,6 @@ function [Group_Start, Group_End] = Find_Logical_Groups(Input_Array)
     Group_End = strfind(Input_Array', [1, 0]) - 1;
     %% Sense-Check Output
     if(length(Group_Start) ~= length(Group_End))
-        warning("Find Logical Grouping : Unexpected error, differing lengths for Start and End");
+        warning("Find Logical Grouping : Unexpected error, differing lengths for Start and End.");
     end
 end
